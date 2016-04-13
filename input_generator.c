@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     }
 
     seed = get_seed(); //get seed value from entropy pool  
-    gsl_rng_set (r, seed); //Seed the rng
+    gsl_rng_set (r, seed); //Seed the rng 
 
     for(long int i = 0; i < num_processes; i++)
     {
