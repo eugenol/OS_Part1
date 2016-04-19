@@ -66,7 +66,7 @@ int main(int argc, char **argv)
         
         // burst time using exponential distribution
         burst_time =  (unsigned long int )ceil(gsl_ran_exponential(r, ave_burst_time_per_proc));
-
+        
         // priority using random number
         priority = gsl_rng_get(r) % num_priority_levels + 1;
         
