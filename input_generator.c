@@ -19,8 +19,8 @@ int main(int argc, char **argv)
 {
     //Input values
     long int num_processes;
-    long int ave_num_proc_per_time;
-    long int ave_burst_time_per_proc;
+    double ave_num_proc_per_time;
+    double ave_burst_time_per_proc;
     long int num_priority_levels;
     
     unsigned long int seed;
@@ -40,8 +40,8 @@ int main(int argc, char **argv)
 
     //Convert arguments to numbers
     num_processes = strtol(argv[1],NULL,10);
-    ave_num_proc_per_time = strtol(argv[2],NULL,10);
-    ave_burst_time_per_proc = strtol(argv[3],NULL,10);
+    ave_num_proc_per_time = atof(argv[2]);
+    ave_burst_time_per_proc = atof(argv[3]);
     num_priority_levels = strtol(argv[4],NULL,10);
         
     fptr = fopen("input.txt","w"); //Open file for writing
@@ -69,7 +69,8 @@ int main(int argc, char **argv)
         burst_time =  (unsigned long int )ceil(gsl_ran_exponential(r, ave_burst_time_per_proc));
         
         // priority using random number
-        priority = gsl_rng_get(r) % num_priority_levels + 1;
+        //priority = gsl_rng_get(r) % num_priority_levels + 1;
+        priority = gsl_rng_uniform_int(r,num_priority_levels);
         
         //print to file
         fprintf(fptr,"Process%lu %u %lu %lu\n",i,arrival_time,burst_time,priority);
