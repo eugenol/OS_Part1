@@ -25,8 +25,8 @@ int main(int argc, char **argv)
     
     unsigned long int seed;
     unsigned long int burst_time;
-    unsigned int arrival_time;
     unsigned long int priority;
+    unsigned int arrival_time = 0;
     
     FILE * fptr;
     gsl_rng * r; //Instance of random number generator
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     //Check if all the arguments have been passed
     if(argc<5)
     {
-        printf("Usage: input_generator <number of processes> <average number of process arrivals per unit time> <average burst time per proces> <number of priority levels>");
+        printf("Usage: input_generator <number of processes> <average number of process arrivals per unit time> <average burst time per proces> <number of priority levels>\n");
         return EXIT_FAILURE;
     }
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     //Check if rng is created
     if(!r)
     {
-        printf("Error: Could not instantiate random number generator.");
+        printf("Error: Could not instantiate random number generator.\n");
         return EXIT_FAILURE; 
     }
 
@@ -61,8 +61,9 @@ int main(int argc, char **argv)
 
     for(long int i = 0; i < num_processes; i++)
     {
-        // arrival time using poisson distribution  
-        arrival_time =  gsl_ran_poisson(r, ave_num_proc_per_time);
+        // arrival time using poisson distribution
+        if(i)  
+            arrival_time +=  gsl_ran_poisson(r, ave_num_proc_per_time);
         
         // burst time using exponential distribution
         burst_time =  (unsigned long int )ceil(gsl_ran_exponential(r, ave_burst_time_per_proc));
